@@ -415,29 +415,29 @@ Save the query and click Start on the Stream Analytics job.
 ## Results
 
 ### Key Findings
-- The Stream Analytics job successfully processed real-time data from IoT sensors and stored the aggregated results in Azure Blob Storage.
-- Key metrics derived from the data include:
+1. The Stream Analytics job successfully processed real-time data from IoT sensors and stored the aggregated results in Azure Blob Storage.
+2. Key metrics derived from the data include:
   - **Average Ice Thickness:** Provides insights into ice conditions over specific intervals.
   - **Maximum Snow Accumulation:** Highlights peak snow accumulation during the same time windows.
 
 ### Sample Aggregated Outputs
-- The processed data can be found in the [output.json](JSON-Output/0_37cbf2a63e2446a1bed9f04d2a9d771f_1.json) file.
+1. The processed data can be found in the [output.json](JSON-Output/0_37cbf2a63e2446a1bed9f04d2a9d771f_1.json) file.
 
 ### Accessing the Data
-- Navigate to the **iotoutput** container in our Azure Blob Storage account to view the stored files.
-- ![Accessing the Data](screenshots/Accessing-the-Data.png)
+1. Navigate to the **iotoutput** container in our Azure Blob Storage account to view the stored files.
+2. ![Accessing the Data](screenshots/Accessing-the-Data.png)
 
 
 ## Reflection
 
 ### Implementation Experience
-- The implementation of the Stream Analytics job was smooth and seamless. All steps, from configuring inputs and outputs to writing the query and processing data, were executed without any issues.
+1. The implementation of the Stream Analytics job was smooth and seamless. All steps, from configuring inputs and outputs to writing the query and processing data, were executed without any issues.
 
 ### Challenges and Solutions
-- In this assignment, no challenges or difficulties were encountered during the setup or execution phases. 
-- The Azure platform's intuitive interface and comprehensive documentation greatly facilitated the process.
+1. In this assignment, no challenges or difficulties were encountered during the setup or execution phases. 
+2. The Azure platform's intuitive interface and comprehensive documentation greatly facilitated the process.
 
 ### Overall Learning
-- This assignment provided valuable insights into real-time data processing with Azure Stream Analytics.
-- It demonstrated the ease of integrating Azure services, such as IoT Hub and Blob Storage, to create an end-to-end data processing pipeline. 
+1. This assignment provided valuable insights into real-time data processing with Azure Stream Analytics.
+2. It demonstrated the ease of integrating Azure services, such as IoT Hub and Blob Storage, to create an end-to-end data processing pipeline. 
 
