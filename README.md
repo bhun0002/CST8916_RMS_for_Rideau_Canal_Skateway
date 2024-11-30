@@ -100,7 +100,7 @@ The system consists of three main components:
 #### Step 2: Define Input
 - Navigate to the **Inputs** section of the job and click **Add**.
 - Select **IoT Hub** as the input source and configure the required settings:
-  - Select your existing IoT Hub namespace.
+  - Select our existing IoT Hub namespace.
   - Use the **iothubowner** policy for authorization.
   - Specify a consumer group, either **$Default** or a newly created one.
   - Choose **JSON** as the serialization format.
@@ -201,21 +201,21 @@ Each JSON file contains aggregated data based on the Stream Analytics query. The
 
 #### Install Python
 
-- Ensure that Python is installed on your system.
+- Ensure that Python is installed on our system.
 - If not, download and install it from the official Python website.
 
 ---
 
 #### Set Up the Script
 
-- Save the Python script in a file named `simulate_sensor.py`.
+- Save the Python script in a file named `simulate_sensor_sensor_name.py`.
 ```python
 
 import time
 import random
 from azure.iot.device import IoTHubDeviceClient, Message
 
-CONNECTION_STRING =  "Your Connection String for each sensor", # My Connection String : HostName=RideauCanalSkatewayIoT.azure-devices.net;DeviceId=dows-lake-sensor;SharedAccessKey=2FdwxQdkqj08SIPE4bEwXpjT8fCw/4dl3UvnIz2fqFg=
+CONNECTION_STRING =  "our Connection String for each sensor", # My Connection String : HostName=RideauCanalSkatewayIoT.azure-devices.net;DeviceId=dows-lake-sensor;SharedAccessKey=2FdwxQdkqj08SIPE4bEwXpjT8fCw/4dl3UvnIz2fqFg=
 
 def get_telemetry():
     return {
@@ -270,7 +270,7 @@ pip install azure-iot-device
 
 #### Update the Connection String
 
-- Replace the `CONNECTION_STRING` in the script with the appropriate connection string for your IoT device.
+- Replace the `CONNECTION_STRING` in the script with the appropriate connection string for our IoT device.
 
 ---
 
@@ -303,12 +303,18 @@ pip install azure-iot-device
 
 ##### 1. Create an IoT Hub
 1. In the Azure Portal, search for **IoT Hub** and click **Create**.
-2. Provide a name for your IoT Hub and select a resource group.
+2. Provide a name for our IoT Hub and select a resource group.
 3. Choose the **Free Tier** (if available) for testing purposes and create the IoT Hub.
+![Create an IoT Hub](screenshots/iot-create.png)
 ##### 2. Register a Device
 1. In the IoT Hub, go to the **Devices** section and click **Add Device**.
 2. Provide a Device ID (e.g., `nac-sensor`, `fifth-avenue-sensor`, `dows-lake-sensor`) and click **Save**.
+![iot-devices](screenshots/iot-devices.png)
 3. After the device is created, click on it to view the connection string. Copy the connection string for use in the Python script that going to simulate the sensor.
+![iot-devices](screenshots/dows-lake-sensor.png)
+![iot-devices](screenshots/fifth-avenue-sensor.png)
+![iot-devices](screenshots/nac-sensor.png)
+
 ##### 3. Install Required Libraries
 
 Install the `azure-iot-device` library to simulate sensor data. Run the following command:
@@ -317,34 +323,40 @@ Install the `azure-iot-device` library to simulate sensor data. Run the followin
 pip install azure-iot-device
 ```
 ##### 4. Run the Python Script to Simulate Sensor Data
-Use the following previously generated python scripts `\simulate_sensor.py` to simulate telemetry data and send it to the IoT Hub. Replace the `CONNECTION_STRING` with the device connection string you copied earlier.
+Use the following previously generated python scripts `simulate_dows_lake_sensor.py`, `simulate_fifth_avenue_sensor.py`, `simulate_nac_sensor.py` to simulate telemetry data and send it to the IoT Hub. Replace the `CONNECTION_STRING` with the device connection string you copied earlier.
 
 
 
-### 5. Run the Script
-Execute the script to start sending telemetry data to your IoT Hub.
+##### 5. Run the Script
+Execute the script to start sending telemetry data to our IoT Hub.
 
-## Step 2: Create and Configure a Stream Analytics Job
-#### 1. Create the Stream Analytics Job
+#### Step 2: Create and Configure a Stream Analytics Job
+##### 1. Create the Stream Analytics Job
 1. In the Azure Portal, search for Stream Analytics jobs and click Create.
-2. Provide a name for your job and select the appropriate resource group.
+2. Provide a name for our job and select the appropriate resource group.
 3. Choose Cloud as the hosting environment and create the job.
-#### 2. Define Input
+![iot-devices](screenshots/Stream-Analytics-Job.png)
+
+
+
+##### 2. Define Input
 1. In the Stream Analytics job, go to the Inputs section and click Add.
 2. Choose IoT Hub as the input source.
 3. Provide the following details:
-   - IoT Hub Namespace: Select your IoT Hub.
+   - IoT Hub Namespace: Select our IoT Hub.
    - IoT Hub Policy Name: Use the iothubowner policy.
-   - Consumer Group: Use $Default or create a new consumer group in your IoT Hub.
+   - Consumer Group: Use $Default or create a new consumer group in our IoT Hub.
    - Serialization Format: Choose JSON.
-#### 3. Define Output
+![iot-devices](screenshots/Define-Input.png)
+##### 3. Define Output
 1. Go to the Outputs section and click Add.
 2. Choose Blob Storage as the output destination.
 3. Provide the following details:
-   - Storage Account: Select your Azure Storage Account.
+   - Storage Account: Select our Azure Storage Account.
    - Container: Create or choose an existing container for storing results.
    - Path Pattern: Optionally define a folder structure (e.g., output/{date}/{time}).
-#### 4. Write the Stream Analytics Query
+![iot-devices](screenshots/Define-Output.png)
+##### 4. Write the Stream Analytics Query
 Go to the Query tab and replace the default query with the following:
 
 
@@ -363,9 +375,69 @@ GROUP BY
     IoTHub.ConnectionDeviceId, TumblingWindow(minute, 5)
 
 ```
+![iot-devices](screenshots/Stream-Analytics-Query.png)
+
 **Explanation:** This query processes streaming data in Azure Stream Analytics. 
 It calculates the **average temperature and humidity** from incoming telemetry data grouped by device `Input.location` over 60-second intervals using a tumbling window. 
 The results include the device ID, the computed averages, and the event timestamp `System.Timestamp`. 
 The processed data is then written to an output sink specified by `output`. 
-#### 5. Save and Start the Job
+##### 5. Save and Start the Job
 Save the query and click Start on the Stream Analytics job.
+
+### Accessing Stored Data in Azure Blob Storage
+
+#### Steps to Locate and View Processed Data
+
+1. **Log in to the Azure Portal**
+   - Navigate to the [Azure Portal](https://portal.azure.com) and sign in with our credentials.
+
+2. **Access the Storage Account**
+   - In the Azure Portal, search for **Storage Accounts** in the top search bar.
+   - Select the storage account associated with our Stream Analytics job.
+
+3. **Navigate to the Container**
+   - Once inside the storage account, go to the **Containers** section.
+   - Locate and select the container named **iotoutput** (or the container specified during job setup).
+   ![Navigate to the Container](screenshots/Navigate-to-the-Container.png)
+
+4. **Download or Preview Files**
+   - Select a file (e.g., a `.json` file) to preview its content directly in the Azure Portal.
+   - Alternatively, download the file to our local machine for detailed analysis using tools like a text editor, JSON viewer, or data processing software.
+   ![Download or Preview Files](screenshots/Download-or-Preview-Files.png)
+   
+5. **Verify Data Content**
+   - Open the downloaded file or use the preview feature to confirm that the content matches the expected output, such as:
+     - DeviceId
+     - AvgIceThickness
+     - MaxSnowAccumulation
+     - EventTime
+
+## Results
+
+### Key Findings
+- The Stream Analytics job successfully processed real-time data from IoT sensors and stored the aggregated results in Azure Blob Storage.
+- Key metrics derived from the data include:
+  - **Average Ice Thickness:** Provides insights into ice conditions over specific intervals.
+  - **Maximum Snow Accumulation:** Highlights peak snow accumulation during the same time windows.
+
+### Sample Aggregated Outputs
+- The processed data can be found in the [output.json](JSON-Output/0_37cbf2a63e2446a1bed9f04d2a9d771f_1.json) file.
+
+### Accessing the Data
+- Navigate to the **iotoutput** container in our Azure Blob Storage account to view the stored files.
+- ![Accessing the Data](screenshots/Accessing-the-Data.png)
+
+
+## Reflection
+
+### Implementation Experience
+- The implementation of the Stream Analytics job was smooth and seamless. All steps, from configuring inputs and outputs to writing the query and processing data, were executed without any issues.
+
+### Challenges and Solutions
+- In this assignment, no challenges or difficulties were encountered during the setup or execution phases. 
+- The Azure platform's intuitive interface and comprehensive documentation greatly facilitated the process.
+
+### Overall Learning
+- This assignment provided valuable insights into real-time data processing with Azure Stream Analytics.
+- It demonstrated the ease of integrating Azure services, such as IoT Hub and Blob Storage, to create an end-to-end data processing pipeline. 
+
