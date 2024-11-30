@@ -1,5 +1,11 @@
 # Rideau Canal Skateway Monitoring Solution
 
+## Performed By
+### **Group - 21** 
+- **Deval Bhungaliya - bhun0002**
+- **Bhavika Pathria - path0053**
+- **Neetika Prashar - pras0044**
+
 ## Scenario Description
 The Rideau Canal Skateway, a world-renowned historic attraction in
 Ottawa, requires continuous monitoring to ensure the safety of skaters.
