@@ -425,7 +425,7 @@ Save the query and click Start on the Stream Analytics job.
 
 ### Accessing the Data
 1. Navigate to the **iotoutput** container in our Azure Blob Storage account to view the stored files.
-2. ![Accessing the Data](screenshots/Accessing-the-Data.png)
+![Accessing the Data](screenshots/Accessing-the-Data.png)
 
 
 ## Reflection
